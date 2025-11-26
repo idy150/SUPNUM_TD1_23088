@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://com/exercice1/td1/soap"
+           xmlns:tns="http://com/exercice1/td1/soap"
+           elementFormDefault="qualified">
+
+    <!-- Server Type Definition -->
+    <xs:complexType name="Server">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="ipAddress" type="xs:string" minOccurs="0"/>
+            <xs:element name="status" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- CreateServer Request and Response -->
+    <xs:element name="CreateServerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="ipAddress" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateServerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="server" type="tns:Server"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ListServers Request and Response -->
+    <xs:element name="ListServersRequest" type="xs:anyType"/>
+    <xs:element name="ListServersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="servers" type="tns:Server" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- GetServerStatus Request and Response -->
+    <xs:element name="GetServerStatusRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetServerStatusResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- StartServer Request and Response -->
+    <xs:element name="StartServerRequest" type="tns:GetServerStatusRequest"/>
+    <xs:element name="StartServerResponse" type="tns:CreateServerResponse"/>
+
+    <!-- StopServer Request and Response -->
+    <xs:element name="StopServerRequest" type="tns:GetServerStatusRequest"/>
+    <xs:element name="StopServerResponse" type="tns:CreateServerResponse"/>
+
+</xs:schema>
